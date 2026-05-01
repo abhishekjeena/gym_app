@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Gym Pro Portal
 
 Full-stack gym management website with:
@@ -63,3 +64,7 @@ npm run dev
 
 This project includes privacy consent, secure cookies, minimal personal-data fields, and account-management flows, but legal review is still required before claiming full GDPR compliance in production.
 
+=======
+# gym_app
+Old_school_fitness
+>>>>>>> 49c1210c3dd13c2e5933bd8bd2ec54567470c513
