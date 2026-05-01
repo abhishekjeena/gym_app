@@ -1,7 +1,7 @@
-const API_BASE = "http://localhost:5000/api";
+import { apiBasePath } from "../utils/urls";
 
 async function request(path, options = {}) {
-  const response = await fetch(`${API_BASE}${path}`, {
+  const response = await fetch(`${apiBasePath}${path}`, {
     credentials: "include",
     headers: {
       ...(options.body instanceof FormData

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
 import { useToast } from "../context/ToastContext";
+import { buildAssetUrl } from "../utils/urls";
 
 export function YourPlanModal({ open, onClose }) {
   const [documents, setDocuments] = useState([]);
@@ -52,7 +53,7 @@ export function YourPlanModal({ open, onClose }) {
 
   function downloadDocument(filePath, documentName) {
     const link = document.createElement("a");
-    link.href = `http://localhost:5000${filePath}`;
+    link.href = buildAssetUrl(filePath);
     link.download = documentName || "document";
     document.body.appendChild(link);
     link.click();

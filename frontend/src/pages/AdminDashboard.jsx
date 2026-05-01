@@ -6,6 +6,7 @@ import { ProfileModal } from "../components/ProfileModal";
 import { ChangePasswordCard } from "../components/ChangePasswordCard";
 import { ClientDocumentsModal } from "../components/ClientDocumentsModal";
 import { useToast } from "../context/ToastContext";
+import { buildAssetUrl } from "../utils/urls";
 
 const planDurations = {
   Monthly: 1,
@@ -359,7 +360,7 @@ export function AdminDashboard() {
               <img
                 src={
                   user?.profile_image_url
-                    ? `http://localhost:5000${user.profile_image_url}`
+                    ? buildAssetUrl(user.profile_image_url)
                     : "https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=300&q=80"
                 }
                 alt={user?.full_name}
@@ -856,7 +857,7 @@ export function AdminDashboard() {
               <img
                 src={
                   selectedClient.profile_image_url
-                    ? `http://localhost:5000${selectedClient.profile_image_url}`
+                    ? buildAssetUrl(selectedClient.profile_image_url)
                     : "https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=300&q=80"
                 }
                 alt={selectedClient.full_name}
