@@ -8,13 +8,17 @@ const envFilePath = path.resolve(__dirname, "../../", process.env.ENV_FILE || ".
 
 dotenv.config({ path: envFilePath });
 
+function normalizeOrigin(value) {
+  return value.trim().replace(/\/+$/, "");
+}
+
 export const env = {
   port: Number(process.env.PORT || 5000),
   nodeEnv: process.env.NODE_ENV || "development",
-  clientUrl: process.env.CLIENT_URL || "http://localhost:5173",
+  clientUrl: normalizeOrigin(process.env.CLIENT_URL || "http://localhost:5173"),
   clientUrls: (process.env.CLIENT_URLS || process.env.CLIENT_URL || "http://localhost:5173")
     .split(",")
-    .map((value) => value.trim())
+    .map(normalizeOrigin)
     .filter(Boolean),
   databaseUrl:
     process.env.DATABASE_URL ||

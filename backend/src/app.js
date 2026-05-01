@@ -15,7 +15,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const app = express();
-const allowedOrigins = env.clientUrls;
+const allowedOrigins = new Set(env.clientUrls);
+
+function normalizeOrigin(value = "") {
+  return value.replace(/\/+$/, "");
+}
 
 app.use(
   helmet({
@@ -24,7 +28,19 @@ app.use(
 );
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin(origin, callback) {
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      const normalizedOrigin = normalizeOrigin(origin);
+
+      if (allowedOrigins.has(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true,
   })
 );
