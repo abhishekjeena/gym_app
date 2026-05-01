@@ -5,6 +5,7 @@ import { api } from "../api/client";
 import { ProfileModal } from "../components/ProfileModal";
 import { ChangePasswordCard } from "../components/ChangePasswordCard";
 import { ClientDocumentsModal } from "../components/ClientDocumentsModal";
+import { useToast } from "../context/ToastContext";
 
 const planDurations = {
   Monthly: 1,
@@ -45,6 +46,7 @@ export function AdminDashboard() {
   const clientsPerPage = 10;
   const planListPerPage = 10;
   const { user, setUser, refreshUser } = useAuth();
+  const toast = useToast();
   const [profileOpen, setProfileOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
   const [clientFormOpen, setClientFormOpen] = useState(false);
@@ -94,6 +96,7 @@ export function AdminDashboard() {
       setTimelineForm({ content: timelineRes.timeline?.content || "" });
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -113,8 +116,10 @@ export function AdminDashboard() {
       const payload = { ...form, age: Number(form.age) || null };
       if (editingId) {
         await api.put(`/admin/clients/${editingId}`, payload);
+        toast.success("Client updated successfully.");
       } else {
         await api.post("/admin/clients", payload);
+        toast.success("Client created successfully.");
       }
       setForm(emptyClient);
       setEditingId(null);
@@ -122,24 +127,29 @@ export function AdminDashboard() {
       await loadData();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
   async function handleDelete(id) {
     try {
       await api.delete(`/admin/clients/${id}`);
+      toast.success("Client deactivated successfully.");
       await loadData();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
   async function handleActivate(id) {
     try {
       await api.patch(`/admin/clients/${id}/activate`);
+      toast.success("Client activated successfully.");
       await loadData();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -208,9 +218,11 @@ export function AdminDashboard() {
       );
       setSelectedClient(data.client);
       setRenewalOpen(false);
+      toast.success("Membership renewed successfully.");
       await loadData();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -223,8 +235,10 @@ export function AdminDashboard() {
       const data = await api.post("/admin/timeline", timelineForm);
       setTimelineForm({ content: data.timeline?.content || "" });
       setTimelineStatus(data.message);
+      toast.success(data.message);
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 

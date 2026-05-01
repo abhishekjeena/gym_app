@@ -12,6 +12,12 @@ import topImage4 from "../assets/gym-gallery/top-4.jpeg";
 import topImage5 from "../assets/gym-gallery/top-5.jpeg";
 import topImage6 from "../assets/gym-gallery/top-6.jpeg";
 import topImage7 from "../assets/gym-gallery/top-7.jpeg";
+import supplementImage1 from "../assets/supplements/supplement-1.jpg";
+import supplementImage2 from "../assets/supplements/supplement-2.jpg";
+import supplementImage3 from "../assets/supplements/supplement-3.jpg";
+import supplementImage4 from "../assets/supplements/supplement-4.jpg";
+import supplementImage5 from "../assets/supplements/supplement-5.jpg";
+import supplementImage6 from "../assets/supplements/supplement-6.jpg";
 
 const highlights = [
   {
@@ -97,6 +103,53 @@ const gymGallery = [
     alt: "Fitness training vibe inspired by Old School Fitness Gym Haldwani",
     caption: "Training Energy",
   },
+];
+
+const supplementGallery = [
+  {
+    src: supplementImage1,
+    alt: "Whey protein supplement jar",
+    caption: "Gold Standard Whey",
+  },
+  {
+    src: supplementImage2,
+    alt: "Vitamin D3 supplement bottle",
+    caption: "Vitamin D3",
+  },
+  {
+    src: supplementImage3,
+    alt: "Glutamine supplement jar",
+    caption: "Glutaking",
+  },
+  {
+    src: supplementImage4,
+    alt: "Daily vitamin bottles",
+    caption: "Daily Vitamins",
+  },
+  {
+    src: supplementImage5,
+    alt: "Nitric oxide supplement bottle",
+    caption: "Nitric Oxide",
+  },
+  {
+    src: supplementImage6,
+    alt: "Supplement stack collection",
+    caption: "Complete Stack",
+  },
+];
+
+const trainingFocusAreas = [
+  "Strength and muscle building plans for visible progress",
+  "Fat-loss focused routines with cardio and discipline",
+  "Beginner-friendly coaching with form correction and support",
+  "Performance-based programming for stamina and consistency",
+];
+
+const personalTrainingBenefits = [
+  "One-to-one exercise guidance with proper technique focus",
+  "Goal-based planning for muscle gain, fat loss, and fitness",
+  "Workout accountability to keep members disciplined and regular",
+  "Safer progression through better posture, form, and recovery",
 ];
 
 function renderStars(value) {
@@ -186,6 +239,9 @@ export function LandingPage() {
             </a>
             <a href="#training" onClick={() => setMenuOpen(false)}>
               Training
+            </a>
+            <a href="#supplements" onClick={() => setMenuOpen(false)}>
+              Supplement
             </a>
             <a href="#privacy" onClick={() => setMenuOpen(false)}>
               Privacy
@@ -461,25 +517,100 @@ export function LandingPage() {
               <h2>Structured coaching for strength, fitness, discipline, and long-term progress.</h2>
             </div>
           </div>
-          <div className="feature-stack">
-            <div className="feature-card">
-              <h3>Training</h3>
+          <div className="training-showcase">
+            <article className="training-feature-card training-main-card">
+              <span className="trainer-highlight">Daily Gym Training</span>
+              <h3>Serious training built for people who want real change.</h3>
               <p>
-                Our training floor is built for people who want real progress through
-                consistent workouts, better form, and a motivating gym atmosphere.
-                Members can work on strength, endurance, fat loss, muscle building,
-                and overall fitness with a practical routine that fits their goal.
+                Our training environment is designed for members who want more than
+                casual workouts. The focus is on discipline, progressive overload,
+                better exercise execution, and a routine that produces visible results
+                over time. Whether the goal is muscle gain, fat loss, strength, or
+                full-body fitness, members train in a motivating space that supports
+                regular effort and long-term consistency.
               </p>
+              <div className="training-badges">
+                <span>Strength</span>
+                <span>Fat Loss</span>
+                <span>Muscle Gain</span>
+                <span>Endurance</span>
+              </div>
+              <div className="training-points-grid">
+                {trainingFocusAreas.map((item) => (
+                  <div key={item} className="training-point-card">
+                    <strong>{item}</strong>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="training-feature-card personal-training-card">
+              <span className="trainer-highlight">Personal Training</span>
+              <h3>Focused coaching with personal attention from Hritik Anand.</h3>
+              <p>
+                Personal training is built for members who want expert guidance, closer
+                monitoring, and faster improvement through a structured plan. Every
+                session gives attention to form, exercise selection, workout intensity,
+                and consistency so members can train with more confidence and waste less effort.
+              </p>
+              <div className="personal-training-meta">
+                <div>
+                  <strong>1-to-1 Guidance</strong>
+                  <span>Direct correction, motivation, and progress tracking</span>
+                </div>
+                <div>
+                  <strong>Goal Specific</strong>
+                  <span>Programs shaped around body transformation and performance</span>
+                </div>
+              </div>
+              <div className="training-benefit-list">
+                {personalTrainingBenefits.map((item) => (
+                  <p key={item}>{item}</p>
+                ))}
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="supplements" className="content-section supplement-section">
+          <div className="section-heading">
+            <div>
+              <span className="eyebrow">Supplement Zone</span>
+              <h2>Right support for recovery, strength, energy, and daily performance.</h2>
             </div>
-            <div className="feature-card">
-              <h3>Personal Training</h3>
-              <span className="trainer-highlight">Hritik Anand Certified</span>
-              <p>
-                Personal training is focused on proper guidance, exercise technique,
-                workout discipline, and personal attention.
-                It is designed to help members train with more confidence, improve
-                performance safely, and stay committed to their transformation journey.
-              </p>
+          </div>
+          <div className="supplement-copy-card">
+            <p>
+              Good supplements can support your training routine when they are paired
+              with disciplined workouts, proper sleep, and a balanced diet.
+            </p>
+            <p>
+              Protein helps with muscle recovery, vitamins support daily wellness,
+              and performance formulas can improve workout consistency and energy.
+            </p>
+            <p>
+              At Old School Fitness Gym, supplements are presented as support tools,
+              not shortcuts, so members can stay focused on smart and steady progress.
+            </p>
+            <p>
+              Choosing the right product for your goal makes recovery better, training
+              more efficient, and long-term fitness results easier to maintain.
+            </p>
+          </div>
+          <div className="gym-carousel supplement-carousel" aria-label="Supplement product carousel">
+            <div className="gym-carousel-track supplement-carousel-track">
+              {[...supplementGallery, ...supplementGallery].map((item, index) => (
+                <article
+                  key={`${item.caption}-${index}`}
+                  className="gym-carousel-card supplement-carousel-card"
+                  aria-hidden={index >= supplementGallery.length ? "true" : undefined}
+                >
+                  <img src={item.src} alt={item.alt} />
+                  <div className="gym-carousel-overlay">
+                    <span>{item.caption}</span>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
@@ -512,6 +643,7 @@ export function LandingPage() {
               <a href="#programs">Programs</a>
               <a href="#about">About</a>
               <a href="#training">Training</a>
+              <a href="#supplements">Supplement</a>
               <a href="#privacy">Privacy</a>
             </div>
             <div>
@@ -598,11 +730,12 @@ export function LandingPage() {
               <h4>What is available on this website</h4>
               <p>
                 This website is made for OLD SCHOOL FITNESS GYM to manage members,
-                training details, privacy, and daily gym operations from one place.
+                training details, supplements, privacy, feedback, and daily gym operations from one place.
               </p>
               <p>
-                Visitors can read about the gym, training, privacy, and location.
-                Members can join or log in, and admins can manage the full client list.
+                Visitors can explore gym photos, reels, training details, supplement highlights,
+                privacy details, location information, and client feedback from the landing page.
+                Members can join or log in, and admins can manage the full client list and landing updates.
               </p>
             </div>
 
@@ -614,7 +747,8 @@ export function LandingPage() {
               </p>
               <p>
                 After login, members can update their profile, check their membership
-                start date, finish date, and plan type, and manage their workout schedule.
+                start date, finish date, and plan type, manage their workout schedule,
+                and submit feedback that appears on the landing page.
               </p>
               <p>
                 When a membership is close to ending, a renewal popup appears on login
@@ -631,7 +765,8 @@ export function LandingPage() {
               </p>
               <p>
                 Admins can also check plan alerts to quickly see which memberships are
-                expired or close to expiry.
+                expired or close to expiry, and they can manage the landing page timeline
+                message that scrolls across the public website.
               </p>
             </div>
 
@@ -640,16 +775,31 @@ export function LandingPage() {
               <p>
                 The website includes member registration, secure login, role-based
                 dashboard access, profile editing, password reset, membership plan
-                tracking, training information, gym location details, and privacy information.
+                tracking, training information, gym location details, privacy information,
+                client feedback, a featured gym gallery, a supplement carousel, and an
+                expanded personal training showcase.
+              </p>
+            </div>
+
+            <div className="docs-section">
+              <h4>Landing page highlights</h4>
+              <p>
+                The landing page includes a top photo carousel, a client rating summary,
+                Instagram reels, a moving gym gallery, a detailed training section, and
+                a supplement section with real uploaded product images.
+              </p>
+              <p>
+                The Training area explains gym training focus, member goals, and personal
+                training benefits, making it one of the most important sections for new visitors.
               </p>
             </div>
 
             <div className="docs-section">
               <h4>Quick steps</h4>
-              <p>1. Open the landing page and read gym details or training information.</p>
+              <p>1. Open the landing page and explore gym details, training, and supplements.</p>
               <p>2. Click Login / Join to create a member account or sign in.</p>
-              <p>3. Members manage their profile and schedules from the client dashboard.</p>
-              <p>4. Admins manage all clients and plan activity from the admin dashboard.</p>
+              <p>3. Members manage their profile, schedules, and feedback from the client dashboard.</p>
+              <p>4. Admins manage all clients, plan activity, and timeline updates from the admin dashboard.</p>
             </div>
           </div>
         </div>

@@ -424,6 +424,127 @@ img {
   margin: 24px 0 32px;
 }
 
+.supplement-section {
+  margin: 24px 0 32px;
+}
+
+.supplement-copy-card {
+  padding: 26px 28px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(245, 245, 245, 0.92)),
+    linear-gradient(135deg, rgba(255, 66, 82, 0.08), rgba(255, 255, 255, 0.2));
+  box-shadow: var(--shadow);
+  color: #171717;
+}
+
+.supplement-copy-card p {
+  margin: 0;
+  line-height: 1.8;
+  color: #2f2f2f;
+}
+
+.supplement-copy-card p + p {
+  margin-top: 12px;
+}
+
+.supplement-carousel {
+  margin-top: 24px;
+}
+
+.supplement-carousel-track {
+  animation-duration: 30s;
+}
+
+.supplement-carousel-card {
+  width: 280px;
+  flex-basis: 280px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
+}
+
+.training-showcase {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 20px;
+}
+
+.training-feature-card {
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 28px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 66, 82, 0.12), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.training-feature-card h3 {
+  margin: 0 0 14px;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
+.training-feature-card p,
+.personal-training-meta span,
+.training-benefit-list p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.training-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 20px;
+}
+
+.training-badges span,
+.personal-training-meta strong {
+  display: inline-flex;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 66, 82, 0.14);
+  border: 1px solid rgba(255, 66, 82, 0.28);
+  color: #ffe7ea;
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.training-points-grid,
+.personal-training-meta,
+.training-benefit-list {
+  display: grid;
+  gap: 14px;
+}
+
+.training-points-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.training-point-card,
+.personal-training-meta div,
+.training-benefit-list p {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  margin: 0;
+}
+
+.training-point-card strong,
+.personal-training-meta strong {
+  display: block;
+}
+
+.personal-training-meta span {
+  display: block;
+  margin-top: 10px;
+}
+
 .reel-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -581,6 +702,56 @@ img {
   gap: 16px;
   padding-top: 18px;
   border-top: 1px solid var(--line);
+}
+
+.toast-stack {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+  display: grid;
+  gap: 12px;
+  width: min(360px, calc(100vw - 24px));
+}
+
+.toast {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: start;
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(16px);
+  animation: toastSlideIn 0.24s ease;
+}
+
+.toast p {
+  margin: 0;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+.toast-success {
+  background: linear-gradient(180deg, rgba(28, 78, 53, 0.95), rgba(18, 49, 33, 0.92));
+}
+
+.toast-error {
+  background: linear-gradient(180deg, rgba(114, 24, 33, 0.95), rgba(63, 16, 21, 0.92));
+}
+
+.toast-info {
+  background: linear-gradient(180deg, rgba(31, 56, 89, 0.95), rgba(18, 34, 58, 0.92));
+}
+
+.toast-close {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
 }
 
 @keyframes gymCarouselScroll {
@@ -1510,6 +1681,18 @@ td {
   }
 }
 
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}
+
 @media (max-width: 980px) {
   .hero-section,
   .split-section,
@@ -1644,6 +1827,13 @@ td {
     padding: 12px 14px;
   }
 
+  .toast-stack {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+  }
+
   .renewal-meta {
     flex-direction: column;
   }
@@ -1740,6 +1930,21 @@ td {
     width: 220px;
     flex-basis: 220px;
     border-radius: 22px;
+  }
+
+  .supplement-copy-card {
+    padding: 20px 18px;
+    border-radius: 22px;
+  }
+
+  .training-showcase,
+  .training-points-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .supplement-carousel-card {
+    width: 230px;
+    flex-basis: 230px;
   }
 
   .top-gym-carousel-card {

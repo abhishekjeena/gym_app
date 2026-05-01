@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
+import { useToast } from "../context/ToastContext";
 
 export function ProfileModal({ user, open, onClose, onSaved }) {
   const [form, setForm] = useState({
@@ -13,6 +14,7 @@ export function ProfileModal({ user, open, onClose, onSaved }) {
   });
   const [profileImage, setProfileImage] = useState(null);
   const [error, setError] = useState("");
+  const toast = useToast();
 
   useEffect(() => {
     setForm({
@@ -41,9 +43,11 @@ export function ProfileModal({ user, open, onClose, onSaved }) {
 
       const data = await api.put("/user/profile", formData);
       onSaved(data.user);
+      toast.success("Profile updated successfully.");
       onClose();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 

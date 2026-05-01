@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 import { api } from "../api/client";
 
 const initialRegister = {
@@ -18,6 +19,7 @@ const initialRegister = {
 export function LoginModal({ open, onClose }) {
   const navigate = useNavigate();
   const { login, register } = useAuth();
+  const toast = useToast();
   const [mode, setMode] = useState("login");
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [registerData, setRegisterData] = useState(initialRegister);
@@ -39,10 +41,12 @@ export function LoginModal({ open, onClose }) {
     setMessage("");
     try {
       const user = await login(loginData);
+      toast.success("Login successful.");
       onClose();
       navigate(user.role === "admin" ? "/admin" : "/client");
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -53,11 +57,14 @@ export function LoginModal({ open, onClose }) {
     try {
       const payload = { ...registerData, age: Number(registerData.age) || null };
       await register(payload);
-      setMessage("Registration complete. You can now log in.");
+      const successMessage = "Registration complete. You can now log in.";
+      setMessage(successMessage);
+      toast.success(successMessage);
       setMode("login");
       setRegisterData(initialRegister);
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -73,14 +80,17 @@ export function LoginModal({ open, onClose }) {
           verificationToken: data.verificationToken,
         }));
         setDevResetCode(data.devResetCode || "");
-        setMessage(
-          "Step 1 complete. Enter the 6-digit reset code and your new password."
-        );
+        const successMessage =
+          "Step 1 complete. Enter the 6-digit reset code and your new password.";
+        setMessage(successMessage);
+        toast.info(successMessage);
         return;
       }
 
       await api.post("/auth/reset-password", forgotData);
-      setMessage("Password reset complete. Please log in with your new password.");
+      const successMessage = "Password reset complete. Please log in with your new password.";
+      setMessage(successMessage);
+      toast.success(successMessage);
       setMode("login");
       setForgotData({
         email: "",
@@ -91,6 +101,7 @@ export function LoginModal({ open, onClose }) {
       setDevResetCode("");
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 

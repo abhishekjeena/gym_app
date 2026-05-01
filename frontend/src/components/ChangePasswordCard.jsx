@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { api } from "../api/client";
+import { useToast } from "../context/ToastContext";
 
 export function ChangePasswordCard() {
   const [form, setForm] = useState({ currentPassword: "", newPassword: "" });
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const toast = useToast();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -13,9 +15,11 @@ export function ChangePasswordCard() {
     try {
       const data = await api.post("/auth/change-password", form);
       setMessage(data.message);
+      toast.success(data.message);
       setForm({ currentPassword: "", newPassword: "" });
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -55,4 +59,3 @@ export function ChangePasswordCard() {
     </div>
   );
 }
-

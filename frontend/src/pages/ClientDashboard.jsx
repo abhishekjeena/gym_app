@@ -5,6 +5,7 @@ import { api } from "../api/client";
 import { ProfileModal } from "../components/ProfileModal";
 import { ChangePasswordCard } from "../components/ChangePasswordCard";
 import { YourPlanModal } from "../components/YourPlanModal";
+import { useToast } from "../context/ToastContext";
 
 const planDurations = {
   Monthly: 1,
@@ -77,6 +78,7 @@ function renderStars(value) {
 export function ClientDashboard() {
   const schedulesPerPage = 10;
   const { user, setUser, refreshUser } = useAuth();
+  const toast = useToast();
   const [profileOpen, setProfileOpen] = useState(false);
   const [planModalOpen, setPlanModalOpen] = useState(false);
   const [schedules, setSchedules] = useState([]);
@@ -123,6 +125,7 @@ export function ClientDashboard() {
       setTimelineMessage(timelineData.timeline?.content || "");
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -177,23 +180,28 @@ export function ClientDashboard() {
     try {
       if (editingId) {
         await api.put(`/user/schedules/${editingId}`, form);
+        toast.success("Workout schedule updated.");
       } else {
         await api.post("/user/schedules", form);
+        toast.success("Workout schedule created.");
       }
       setForm(createScheduleForm());
       setEditingId(null);
       loadSchedules();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
   async function handleDelete(id) {
     try {
       await api.delete(`/user/schedules/${id}`);
+      toast.success("Workout schedule deleted.");
       loadSchedules();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -257,9 +265,11 @@ export function ClientDashboard() {
     try {
       const data = await api.post("/feedback", feedbackForm);
       setFeedbackMessage(data.message);
+      toast.success(data.message);
       setFeedbackForm({ rating: 5, comment: "" });
     } catch (err) {
       setFeedbackError(err.message);
+      toast.error(err.message);
     }
   }
 

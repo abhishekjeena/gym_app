@@ -1,13 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 
 export function DashboardShell({ title, subtitle, actions, sidebarContent, children }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const toast = useToast();
 
   async function handleLogout() {
-    await logout();
-    navigate("/");
+    try {
+      await logout();
+      toast.success("Logged out successfully.");
+      navigate("/");
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 
   return (

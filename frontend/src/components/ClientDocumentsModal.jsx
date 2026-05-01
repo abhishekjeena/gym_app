@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
+import { useToast } from "../context/ToastContext";
 
 export function ClientDocumentsModal({ client, onClose }) {
   const [documentName, setDocumentName] = useState("");
@@ -8,6 +9,7 @@ export function ClientDocumentsModal({ client, onClose }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const toast = useToast();
 
   useEffect(() => {
     loadDocuments();
@@ -19,6 +21,7 @@ export function ClientDocumentsModal({ client, onClose }) {
       setDocuments(data.documents);
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -29,7 +32,9 @@ export function ClientDocumentsModal({ client, onClose }) {
     setLoading(true);
 
     if (!documentName.trim() || !selectedFile) {
-      setError("Please provide both a document name and file.");
+      const message = "Please provide both a document name and file.";
+      setError(message);
+      toast.error(message);
       setLoading(false);
       return;
     }
@@ -42,12 +47,15 @@ export function ClientDocumentsModal({ client, onClose }) {
 
       await api.post(`/admin/clients/${client.id}/documents`, formData);
 
-      setSuccess("Document uploaded successfully!");
+      const successMessage = "Document uploaded successfully!";
+      setSuccess(successMessage);
+      toast.success(successMessage);
       setDocumentName("");
       setSelectedFile(null);
       loadDocuments();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     } finally {
       setLoading(false);
     }
@@ -60,9 +68,11 @@ export function ClientDocumentsModal({ client, onClose }) {
 
     try {
       await api.delete(`/admin/documents/${documentId}`);
+      toast.success("Document deleted successfully.");
       loadDocuments();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     }
   }
 

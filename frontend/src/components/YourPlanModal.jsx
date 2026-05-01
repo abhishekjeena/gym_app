@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/client";
+import { useToast } from "../context/ToastContext";
 
 export function YourPlanModal({ open, onClose }) {
   const [documents, setDocuments] = useState([]);
@@ -7,6 +8,7 @@ export function YourPlanModal({ open, onClose }) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [deleting, setDeleting] = useState(null);
+  const toast = useToast();
 
   useEffect(() => {
     if (open) {
@@ -23,6 +25,7 @@ export function YourPlanModal({ open, onClose }) {
       setDocuments(data.documents);
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
       setDocuments([]);
     } finally {
       setLoading(false);
@@ -68,10 +71,13 @@ export function YourPlanModal({ open, onClose }) {
     setDeleting(documentId);
     try {
       await api.delete(`/user/documents/${documentId}`);
-      setSuccess("Document deleted successfully.");
+      const successMessage = "Document deleted successfully.";
+      setSuccess(successMessage);
+      toast.success(successMessage);
       loadDocuments();
     } catch (err) {
       setError(err.message);
+      toast.error(err.message);
     } finally {
       setDeleting(null);
     }
