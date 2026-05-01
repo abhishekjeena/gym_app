@@ -15,6 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const app = express();
+const allowedOrigins = env.clientUrls;
 
 app.use(
   helmet({
@@ -23,24 +24,7 @@ app.use(
 );
 app.use(
   cors({
-    origin(origin, callback) {
-      if (!origin) {
-        return callback(null, true);
-      }
-
-      const allowedOrigins = new Set(env.clientUrls);
-      const isLocalhost =
-        /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin) ||
-        /^http:\/\/192\.168\.\d+\.\d+:\d+$/.test(origin) ||
-        /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/.test(origin) ||
-        /^http:\/\/172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+:\d+$/.test(origin);
-
-      if (allowedOrigins.has(origin) || (env.nodeEnv !== "production" && isLocalhost)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error(`CORS blocked for origin: ${origin}`));
-    },
+    origin: allowedOrigins,
     credentials: true,
   })
 );
